@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/65/trunk/examples/example2/exampleblog/templates/exampleblog
+END
+latest.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/65/trunk/examples/example2/exampleblog/templates/exampleblog/latest.html
+END
+comment_partial.html
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/65/trunk/examples/example2/exampleblog/templates/exampleblog/comment_partial.html
+END

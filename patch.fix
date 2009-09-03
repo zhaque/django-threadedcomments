@@ -1,0 +1,124 @@
+Index: threadedcomments/views.py
+===================================================================
+--- threadedcomments/views.py	(revision 127)
++++ threadedcomments/views.py	(working copy)
+@@ -8,6 +8,8 @@
+ from threadedcomments.forms import FreeThreadedCommentForm, ThreadedCommentForm
+ from threadedcomments.models import ThreadedComment, FreeThreadedComment, DEFAULT_MAX_COMMENT_LENGTH
+ from threadedcomments.utils import JSONResponse, XMLResponse
++from scratchpad.models import Item as SItem
++from scratchpad.models import ScratchPad as SPad
+ 
+ def _adjust_max_comment_length(form, field_name='comment'):
+     """
+@@ -79,6 +81,13 @@
+         instance = get_object_or_404(model, id=edit_id)
+     else:
+         instance = None
++    if request.method != "POST":
++        if int(content_type) == 41:
++            item = get_object_or_404(SItem, id=object_id)
++            return render_to_response("scratchpad/jq_comments.html", locals())
++        else:
++            pad = get_object_or_404(SPad, id=object_id)
++            return render_to_response("scratchpad/jq_comments.html", locals())
+     _adjust_max_comment_length(form_class)
+     form = form_class(request.POST, instance=instance)
+     if form.is_valid():
+@@ -180,4 +189,4 @@
+                 },
+                 context_processors
+             )
+-        )
+\ No newline at end of file
++        )
+Index: threadedcomments/templatetags/threadedcommentstags.py
+===================================================================
+--- threadedcomments/templatetags/threadedcommentstags.py	(revision 127)
++++ threadedcomments/templatetags/threadedcommentstags.py	(working copy)
+@@ -432,4 +432,4 @@
+ register.tag('get_latest_comments', do_get_latest_comments)
+ register.tag('get_latest_free_comments', do_get_latest_comments)
+ register.tag('get_user_comments', do_get_user_comments)
+-register.tag('get_user_comment_count', do_get_user_comment_count)
+\ No newline at end of file
++register.tag('get_user_comment_count', do_get_user_comment_count)
+Index: threadedcomments/templates/threadedcomments_base.html
+===================================================================
+--- threadedcomments/templates/threadedcomments_base.html	(revision 127)
++++ threadedcomments/templates/threadedcomments_base.html	(working copy)
+@@ -1 +1,3 @@
+-{% block content %}{% endblock %}
+\ No newline at end of file
++{% extends "main.html" %}
++
++{% block body %}{% endblock %}
+\ No newline at end of file
+Index: threadedcomments/templates/threadedcomments/confirm_delete.html
+===================================================================
+--- threadedcomments/templates/threadedcomments/confirm_delete.html	(revision 127)
++++ threadedcomments/templates/threadedcomments/confirm_delete.html	(working copy)
+@@ -1,16 +1,16 @@
+ {% extends "threadedcomments_base.html" %}
+ 
+-{% load threadedcommentstags %}
+-
+-{% block content %}
++{% load threadedcommentstags %}
++
++{% block body %}
+     <p>Are you sure that you would like to delete this comment?</p>
+-    {% if comment %}
++    {% if comment %}
+         <div id="comment_preview">{% auto_transform_markup comment %}</div>
+-    {% endif %}
+-    <ul>
+-    <form method="POST" action=".">
+-        <li><input type="submit" value="Yes" /></li>
+-    </form>
+-    <li><a href="{{ next }}">No</a></li>
+-    </ul>
++    {% endif %}
++    <ul>
++    <form method="POST" action=".">
++        <li><input type="submit" value="Yes" /></li>
++    </form>
++    <li><a href="{{ next }}">No</a></li>
++    </ul>
+ {% endblock %}
+\ No newline at end of file
+Index: threadedcomments/templates/threadedcomments/preview_comment.html
+===================================================================
+--- threadedcomments/templates/threadedcomments/preview_comment.html	(revision 127)
++++ threadedcomments/templates/threadedcomments/preview_comment.html	(working copy)
+@@ -1,17 +1,17 @@
+ {% extends "threadedcomments_base.html" %}
+ 
+-{% load threadedcommentstags %}
+-
+-{% block content %}
+-    {% if comment %}
++{% load threadedcommentstags %}
++
++{% block body %}
++    {% if comment %}
+         <div id="comment_preview">{% auto_transform_markup comment %}</div>
+-    {% endif %}
+-    <form method="POST" action="">
+-        <ul>
+-            {{ form.as_ul }}
+-            <li><input type="submit" value="Submit Comment" /></li>
+-            <li><input type="submit" value="Preview Updated Comment" name="preview" /></li>
++    {% endif %}
++    <form method="POST" action="">
++        <ul>
++            {{ form.as_ul }}
++            <li><input type="submit" value="Submit Comment" /></li>
++            <li><input type="submit" value="Preview Updated Comment" name="preview" /></li>
+         </ul>
+-        <input type="hidden" name="next" value="{{ next }}" />
+-    </form>
++        <input type="hidden" name="next" value="{{ next }}" />
++    </form>
+ {% endblock %}
+\ No newline at end of file

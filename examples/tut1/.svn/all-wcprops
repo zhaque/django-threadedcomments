@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/125/trunk/examples/tut1
+END
+manage.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/31/trunk/examples/tut1/manage.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/31/trunk/examples/tut1/__init__.py
+END
+settings.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/31/trunk/examples/tut1/settings.py
+END
+sampledb.db
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/73/trunk/examples/tut1/sampledb.db
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/125/trunk/examples/tut1/urls.py
+END
+username.txt
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/31/trunk/examples/tut1/username.txt
+END
