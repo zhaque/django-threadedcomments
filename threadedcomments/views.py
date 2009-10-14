@@ -9,7 +9,7 @@ from threadedcomments.forms import FreeThreadedCommentForm, ThreadedCommentForm
 from threadedcomments.models import ThreadedComment, FreeThreadedComment, DEFAULT_MAX_COMMENT_LENGTH
 from threadedcomments.utils import JSONResponse, XMLResponse
 from scratchpad.models import Item as SItem
-from scratchpad.models import ScratchPad as SPad
+from scratchpad.models import Scratchpad as SPad
 
 def _adjust_max_comment_length(form, field_name='comment'):
     """
